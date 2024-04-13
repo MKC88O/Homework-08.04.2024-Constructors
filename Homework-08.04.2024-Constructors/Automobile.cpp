@@ -1,62 +1,43 @@
 #include "Automobile.h"
 
-Automobile::Automobile() {
-    SetBrand("Ford");
-    SetModel("Fusion");
-    SetEquipment("Titanium");
-    SetEngineType("DVS");
-    SetEngineVolume(2000.01);
-    SetFuel("Gasoline");
-    SetTransmision("Auto");
-    SetPower(245);
-    SetWheelDrive(2);
-}
-
-Automobile::Automobile(string brand) {
-    SetBrand(brand);
-    SetModel("Fusion");
-    SetEquipment("Titanium");
-    SetEngineType("DVS");
-    SetEngineVolume(2000.01);
-    SetFuel("Gasoline");
-    SetTransmision("Auto");
-    SetPower(245);
-    SetWheelDrive(2);
-}
-Automobile::Automobile(string brand, string model) {
+Automobile::Automobile() : Automobile::Automobile("Ford", "Fusion", "Gasoline", 2000.01) {}
+Automobile::Automobile(string brand) : Automobile::Automobile(brand, "Fusion", "Gasoline", 2000.01) {}
+Automobile::Automobile(string brand, string model) : Automobile::Automobile(brand, model, "Gasoline", 2000.01) {}
+Automobile::Automobile(string brand, string model, string fuel) : Automobile::Automobile(brand,model, fuel, 2000.01) {}
+//main c-tor
+Automobile::Automobile(string brand, string model, string fuel, double engineVolume) {
     SetBrand(brand);
     SetModel(model);
     SetEquipment("Titanium");
     SetEngineType("DVS");
-    SetEngineVolume(2000.01);
-    SetFuel("Gasoline");
-    SetTransmision("Auto");
-    SetPower(245);
-    SetWheelDrive(2);
-}
-
-Automobile::Automobile(string brand, string model, string fuel) {
-    SetBrand(brand);
-    SetModel(model);
-    SetEquipment("Titanium");
-    SetEngineType("DVS");
-    SetEngineVolume(2000.01);
+    SetEngineVolume(engineVolume);
     SetFuel(fuel);
     SetTransmision("Auto");
     SetPower(245);
     SetWheelDrive(2);
+    ratingCount = 1;
+    rating = new int[ratingCount];
+    for (int i = 0; i < ratingCount; i++)
+    {
+        rating[i] = rand() % 5 + 1;
+    }
+}
+Automobile::Automobile(const Automobile& original) : Automobile::Automobile("Ford", "Fusion", "Gasoline", 2000.01) {
+    this->brand = original.brand;
+    this->model = original.model;
+    this->fuel = original.fuel;
+    this->engineVolume = original.engineVolume;
+    this->ratingCount = original.ratingCount;
+    this->rating = new int[this->ratingCount];
+    for (int i = 0; i < this->ratingCount; i++)
+    {
+        this->rating[i] = original.rating[i];
+    }
 }
 
-Automobile::Automobile(string brand, string model, string fuel, double engine_volume) {
-    SetBrand(brand);
-    SetModel(model);
-    SetEquipment("Titanium");
-    SetEngineType("DVS");
-    SetEngineVolume(engine_volume);
-    SetFuel(fuel);
-    SetTransmision("Auto");
-    SetPower(245);
-    SetWheelDrive(2);
+Automobile::~Automobile() {
+    delete[] rating;
+    rating = nullptr;
 }
 
 void Automobile::CarInfo() const {
@@ -64,12 +45,13 @@ void Automobile::CarInfo() const {
     cout << "\t\tCar brand: " << brand << "\n";
     cout << "\t\tModel: " << model << "\n";
     cout << "\t\tCar equipment: " << equipment << "\n";
-    cout << "\t\tEngine type: " << engine_type << "\n";
-    cout << "\t\tEngine volume: " << engine_volume << " sm3\n";
+    cout << "\t\tEngine type: " << engineType << "\n";
+    cout << "\t\tEngine volume: " << engineVolume << " sm3\n";
     cout << "\t\tFuel: " << fuel << "\n";
     cout << "\t\tTransmision: " << transmision << "\n";
     cout << "\t\tEngine power: " << power << " hp\n";
-    cout << "\t\tWheel drive: " << wheel_drive << " wheels\n";
+    cout << "\t\tWheel drive: " << wheelDrive << " wheels\n";
+    cout << "\t\tRating: " << *rating << " stars\n";
     cout << "\n\n";
 }
 
@@ -104,20 +86,20 @@ string Automobile::GetEquipment() const {
     return equipment;
 }
 
-void Automobile::SetEngineType(string engine_type) {
-    this->engine_type = engine_type;
+void Automobile::SetEngineType(string engineType) {
+    this->engineType = engineType;
 }
 
 string Automobile::GetEngineType() const {
-    return engine_type;
+    return engineType;
 }
 
-void Automobile::SetEngineVolume(double engine_volume) {
-    this->engine_volume = engine_volume;
+void Automobile::SetEngineVolume(double engineVolume) {
+    this->engineVolume = engineVolume;
 }
 
 double Automobile::GetEngineVolume() const {
-    return engine_volume;
+    return engineVolume;
 }
 
 void Automobile::SetFuel(string fuel) {
@@ -144,16 +126,16 @@ double Automobile::GetPower() const {
     return power;
 }
 
-void Automobile::SetWheelDrive(int wheel_drive) {
-    if (wheel_drive != 2 && wheel_drive != 4)
+void Automobile::SetWheelDrive(int wheelDrive) {
+    if (wheelDrive != 2 && wheelDrive != 4)
     {
         throw "ERROR!";
     }
-    this->wheel_drive = wheel_drive;
+    this->wheelDrive = wheelDrive;
 }
 
 int Automobile::GetWheelDrive() const {
-    return wheel_drive;
+    return wheelDrive;
 }
 
 

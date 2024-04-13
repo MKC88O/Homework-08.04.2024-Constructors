@@ -1,38 +1,39 @@
 #include "TV.h"
 
-TV::TV() {
-    SetBrand("NoName");
-    SetModel("NoName3000");
-    SetDiagonal(48);
-    SetColor("Black");
-}
-
-TV::TV(string brand) {
-    SetBrand(brand);
-    SetModel("NoName3000");
-    SetDiagonal(48);
-    SetColor("Black");
-}
-
-TV::TV(string brand, string model) {
+TV::TV() : TV::TV("NoName", "NoName3000", "Black", 48) {}
+TV::TV(string brand) : TV::TV(brand, "NoName3000", "Black", 48) {}
+TV::TV(string brand, string model) : TV::TV( brand, model, "Black", 48) {}
+TV::TV(string brand, string model, string color) : TV::TV( brand, model, color, 48) {}
+//main c-tor
+TV::TV(string brand, string model, string color, double diagonal) {
     SetBrand(brand);
     SetModel(model);
-    SetDiagonal(48);
-    SetColor("Black");
-}
-
-TV::TV(string brand, string model, string color) {
-    SetBrand(brand);
-    SetModel(model);
-    SetDiagonal(48);
+    SetDiagonal(diagonal);
     SetColor(color);
+    ratingCount = 1;
+    rating = new int[ratingCount];
+    for (int i = 0; i < ratingCount; i++)
+    {
+        rating[i] = rand() % 5 + 1;
+    }
 }
 
-TV::TV(string brand, string model, string color, double digonal) {
-    SetBrand(brand);
-    SetModel(model);
-    SetDiagonal(digonal);
-    SetColor(color);
+TV::TV(const TV& original) : TV::TV("NoName", "NoName3000", "Black", 48) {
+    this->brand = original.brand;
+    this->model = original.model;
+    this->diagonal = original.diagonal;
+    this->color = original.color;
+    this->ratingCount = original.ratingCount;
+    this->rating = new int[this->ratingCount];
+    for (int i = 0; i < this->ratingCount; i++)
+    {
+        this->rating[i] = original.rating[i];
+    }
+}
+
+TV::~TV() {
+    delete[] rating;
+    rating = nullptr;
 }
 
 void TV::TVInfo() const {
@@ -41,6 +42,7 @@ void TV::TVInfo() const {
     cout << "\tModel: " << model << "\n";
     cout << "\tDiagonal: " << diagonal << " inches" << "\n";
     cout << "\tColor: " << color << "\n";
+    cout << "\tRating: " << *rating << " stars\n";
 }
 
 void TV::TV_On() {
@@ -96,4 +98,6 @@ string TV::GetColor() const {
     return color;
 }
 
-
+//TV::TV(const TV& original) {
+//
+//}

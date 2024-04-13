@@ -5,12 +5,14 @@ using namespace std;
 class PowerBank {
     string brand;
     string color;
-    int quantity_ports = 0;
+    int quantityPorts = 0;
     double capacity = 0;
-    bool Type_C = false;
+    bool TypeC = false;
     bool USB = false;
-    bool Micro_USB = false;
+    bool microUSB = false;
     bool charg = false;
+    int* rating = nullptr;
+    int ratingCount = 0;
 
 public:
     PowerBank();
@@ -20,17 +22,20 @@ public:
     PowerBank(string brand, double capacity);
     PowerBank(double capacity, string color);
     PowerBank(double capacity);
+    PowerBank(const PowerBank& original);
+
+    ~PowerBank();
 
     void Charging() const;
     void  PowerBankInfo() const;
 
     void SetBrand(string brand);
     void SetColor(string color);
-    void SetQuantityPorts(int quantity_ports);
+    void SetQuantityPorts(int quantityPorts);
     void SetCapacity(double capacity);
-    void SetTypeC(bool Type_C);
+    void SetTypeC(bool TypeC);
     void SetUSB(bool USB);
-    void SetMicroUSB(bool Micro_USB);
+    void SetMicroUSB(bool MicroUSB);
     void SetCharg(bool charg);
     
     string GetBrand() const;

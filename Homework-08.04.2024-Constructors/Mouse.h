@@ -9,6 +9,8 @@ class Mouse {
     bool left_button;
     bool right_button;
     bool scrol;
+    int* rating = nullptr;
+    int ratingCount = 0;
 
 public:
     Mouse();
@@ -16,6 +18,9 @@ public:
     Mouse(string brand, string model);
     Mouse(string brand, string model, string color);
     Mouse(bool wireless);
+    Mouse(const Mouse& original);
+
+    ~Mouse();
 
     void Press_left_button() const;
     void Press_right_button() const;

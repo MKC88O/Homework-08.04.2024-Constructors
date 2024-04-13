@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Homework-08.04.2024-Constructors.cpp">
+    <ClCompile Include="Homework-10.04.2024-Constructors-Destructors-Delegation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Dog.cpp">

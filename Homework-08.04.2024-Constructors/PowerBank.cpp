@@ -1,38 +1,9 @@
 #include "PowerBank.h"
 
-PowerBank::PowerBank() {
-    SetBrand("Noname");
-    SetColor("Black");
-    SetQuantityPorts(4);
-    SetCapacity(20000);
-    SetTypeC(true);
-    SetUSB(false);
-    SetMicroUSB(true);
-    SetCharg(true);
-}
-
-PowerBank::PowerBank(string brand) {
-    SetBrand(brand);
-    SetColor("Black");
-    SetQuantityPorts(4);
-    SetCapacity(20000);
-    SetTypeC(true);
-    SetUSB(false);
-    SetMicroUSB(true);
-    SetCharg(true);
-}
-
-PowerBank::PowerBank(string brand, string color) {
-    SetBrand(brand);
-    SetColor(color);
-    SetQuantityPorts(4);
-    SetCapacity(20000);
-    SetTypeC(true);
-    SetUSB(false);
-    SetMicroUSB(true);
-    SetCharg(true);
-}
-
+PowerBank::PowerBank() : PowerBank::PowerBank("Noname", "Black", 20000) {}
+PowerBank::PowerBank(string brand) : PowerBank::PowerBank(brand, "Black", 20000) {}
+PowerBank::PowerBank(string brand, string color) : PowerBank::PowerBank( brand, color, 20000) {}
+//main c-tor
 PowerBank::PowerBank(string brand, string color, double capacity) {
     SetBrand(brand);
     SetColor(color);
@@ -42,42 +13,36 @@ PowerBank::PowerBank(string brand, string color, double capacity) {
     SetUSB(false);
     SetMicroUSB(true);
     SetCharg(true);
+    ratingCount = 5;
+    rating = new int[ratingCount];
+    for (int i = 0; i < ratingCount; i++)
+    {
+        rating[i] = rand() % 5 + 1;
+    }
+}
+PowerBank::PowerBank(string brand, double capacity) : PowerBank::PowerBank( brand, "Black", capacity) {}
+PowerBank::PowerBank(double capacity, string color) : PowerBank::PowerBank("Noname", color, capacity) {}
+PowerBank::PowerBank(double capacity) : PowerBank::PowerBank("Noname", "Black", capacity) {}
+PowerBank::PowerBank(const PowerBank& original) : PowerBank::PowerBank("Noname", "Black", 20000) {
+    this->brand = original.brand;
+    this->color = original.color;
+    this->quantityPorts = original.quantityPorts;
+    this->capacity = original.capacity;
+    this->ratingCount = original.ratingCount;
+    this->rating = new int[this->ratingCount];
+    for (int i = 0; i < this->ratingCount; i++)
+    {
+        this->rating[i] = original.rating[i];
+    }
 }
 
-PowerBank::PowerBank(string brand, double capacity) {
-    SetBrand(brand);
-    SetColor("Black");
-    SetQuantityPorts(4);
-    SetCapacity(capacity);
-    SetTypeC(true);
-    SetUSB(false);
-    SetMicroUSB(true);
-    SetCharg(true);
+PowerBank::~PowerBank() {
+    delete[] rating;
+    rating = nullptr;
 }
 
-PowerBank::PowerBank(double capacity, string color) {
-    SetBrand("Noname");
-    SetColor(color);
-    SetQuantityPorts(4);
-    SetCapacity(capacity);
-    SetTypeC(true);
-    SetUSB(false);
-    SetMicroUSB(true);
-    SetCharg(true);
-}
-
-PowerBank::PowerBank(double capacity) {
-    SetBrand("Noname");
-    SetColor("Black");
-    SetQuantityPorts(4);
-    SetCapacity(capacity);
-    SetTypeC(true);
-    SetUSB(false);
-    SetMicroUSB(true);
-    SetCharg(true);
-}
 void PowerBank::Charging() const {
-    if ((Type_C || Micro_USB) && !USB && charg) {
+    if ((TypeC || microUSB) && !USB && charg) {
         cout << "Power bank charge the device.\n\n";
     }
     else if (USB) {
@@ -89,15 +54,17 @@ void  PowerBank::PowerBankInfo() const {
     cout << "Power Bank Info:\n";
     cout << "\t\tBrand: " << brand << "\n";
     cout << "\t\tColor: " << color << "\n";
-    cout << "\t\tQuantity USB-ports: " << quantity_ports << "\n";
+    cout << "\t\tQuantity USB-ports: " << quantityPorts << "\n";
     cout << "\t\tCapacity: " << capacity << " mA/h\n";
-    if (Type_C) {
+    if (TypeC) {
         cout << "\t\tHave Type C-port \n";
     }
-    if (Micro_USB) {
+    if (microUSB) {
         cout << "\t\tHave Micro USB-port \n";
     }
+    cout << "\t\tRating: " << *rating << " stars\n";
     cout << "\n\n";
+    
 }
 
 void PowerBank::SetBrand(string brand) {
@@ -116,12 +83,12 @@ string PowerBank::GetColor() const {
     return color;
 }
 
-void PowerBank::SetQuantityPorts(int quantity_ports) {
-    this->quantity_ports = quantity_ports;
+void PowerBank::SetQuantityPorts(int quantityPorts) {
+    this->quantityPorts = quantityPorts;
 }
 
 int PowerBank::GetQuantityPorts() const {
-    return quantity_ports;
+    return quantityPorts;
 }
 
 void PowerBank::SetCapacity(double capacity) {
@@ -133,11 +100,11 @@ double PowerBank::GetCapacity() const {
 }
 
 void PowerBank::SetTypeC(bool Type_C) {
-    this->Type_C = Type_C;
+    this->TypeC = Type_C;
 }
 
 bool PowerBank::GetTypeC() const {
-    return Type_C;
+    return TypeC;
 }
 
 void PowerBank::SetUSB(bool USB) {
@@ -149,11 +116,11 @@ bool PowerBank::GetUSB() const {
 }
 
 void PowerBank::SetMicroUSB(bool Micro_USB) {
-    this->Micro_USB = Micro_USB;
+    this->microUSB = Micro_USB;
 }
 
 bool PowerBank::GetMicroUSB() const {
-    return Micro_USB;
+    return microUSB;
 }
 
 void PowerBank::SetCharg(bool charg) {

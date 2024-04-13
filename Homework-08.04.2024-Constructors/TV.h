@@ -7,6 +7,8 @@ class TV {
     string model;
     double diagonal = 0;
     string color;
+    int* rating = nullptr;
+    int ratingCount = 0;
 
 public:
     TV();
@@ -14,6 +16,9 @@ public:
     TV(string brand, string model);
     TV(string brand, string model, string color);
     TV(string brand, string model, string color, double digonal);
+    TV(const TV& original);
+
+    ~TV();
 
     void TVInfo() const;
     void TV_On();

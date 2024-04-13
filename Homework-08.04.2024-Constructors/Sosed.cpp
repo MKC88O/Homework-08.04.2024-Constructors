@@ -1,43 +1,41 @@
 #include "Sosed.h"
 
-Sosed::Sosed() {
-    SetName("Arkadiy");
-    SetShoes("Chugunnye Bashmaki");
-    SetTool("Perforator");
-    SetSleeping(true);
-    SetMentalCondition("CRAZYYY!");
-}
-
-Sosed::Sosed(string name) {
-    SetName(name);
-    SetShoes("Chugunnye Bashmaki");
-    SetTool("Perforator");
-    SetSleeping(true);
-    SetMentalCondition("CRAZYYY!");
-}
-
-Sosed::Sosed(string name, string shoes) {
-    SetName(name);
-    SetShoes(shoes);
-    SetTool("Perforator");
-    SetSleeping(true);
-    SetMentalCondition("CRAZYYY!");
-}
-
-Sosed::Sosed(string name, string shoes, string tool) {
-    SetName(name);
-    SetShoes(shoes);
-    SetTool(tool);
-    SetSleeping(true);
-    SetMentalCondition("CRAZYYY!");
-}
-
+Sosed::Sosed() : Sosed::Sosed("Arkadiy", "Chugunnye Bashmaki", "Perforator", "CRAZYYY!") {}
+Sosed::Sosed(string name) : Sosed::Sosed(name, "Chugunnye Bashmaki", "Perforator", "CRAZYYY!") {}
+Sosed::Sosed(string name, string shoes) : Sosed::Sosed(name, shoes, "Perforator", "CRAZYYY!") {}
+Sosed::Sosed(string name, string shoes, string tool) : Sosed::Sosed(name, shoes, tool, "CRAZYYY!") {}
+//main c-tor
 Sosed::Sosed(string name, string shoes, string tool, string mental_condition) {
     SetName(name);
     SetShoes(shoes);
     SetTool(tool);
     SetSleeping(true);
     SetMentalCondition(mental_condition);
+    friendsCount = 3;
+    friends = new string[friendsCount];
+    for (int i = 0; i < friendsCount; i++)
+    {
+        int random = rand() % 25;
+        friends[i] = sosedFriends[random];
+    }
+}
+
+Sosed::Sosed(const Sosed& original) : Sosed::Sosed("Arkadiy", "Chugunnye Bashmaki", "Perforator", "CRAZYYY!") {
+    this->name = original.name;
+    this->shoes = original.shoes;
+    this->tool = original.tool;
+    this->mental_condition = original.mental_condition;
+    this->friendsCount = original.friendsCount;
+    this->friends = new string[this->friendsCount];
+    for (int i = 0; i < this->friendsCount; i++)
+    {
+        this->friends[i] = original.friends[i];
+    }
+}
+
+Sosed::~Sosed() {
+    delete[] friends;
+    friends = nullptr;
 }
 
 void Sosed::Never_sleep() {
@@ -58,6 +56,11 @@ void Sosed::printSosed() {
         Never_sleep();
         About_myself();
         Work();
+        cout << GetName() << " friends: ";
+        for (int i = 0; i < friendsCount; i++)
+        {
+            cout << friends[i] << ", ";
+        }
         cout << "\n\n";
     }
 }

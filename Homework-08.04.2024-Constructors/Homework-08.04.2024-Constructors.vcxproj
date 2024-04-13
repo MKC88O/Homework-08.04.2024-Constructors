@@ -24,6 +24,7 @@
     <ProjectGuid>{e58291e8-0380-4683-85d3-f7268f5a576b}</ProjectGuid>
     <RootNamespace>Homework08042024Constructors</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Homework-10.04.2024-Constructors-Destructors-Delegation</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -129,7 +130,7 @@
   <ItemGroup>
     <ClCompile Include="Automobile.cpp" />
     <ClCompile Include="Dog.cpp" />
-    <ClCompile Include="Homework-08.04.2024-Constructors.cpp" />
+    <ClCompile Include="Homework-10.04.2024-Constructors-Destructors-Delegation.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="PowerBank.cpp" />
     <ClCompile Include="Sosed.cpp" />

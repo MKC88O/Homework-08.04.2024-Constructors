@@ -8,6 +8,15 @@ class Sosed {
     string tool;
     bool sleeping = false;
     string mental_condition;
+    string* friends = nullptr;
+    int friendsCount = 0;
+    string sosedFriends[25]{
+        "Alexandr", "Kostya", "Roma", "Anya", "Lena",
+        "Ivan", "Marina", "Sergey", "Olya", "Dima",
+        "Tanya", "Andrey", "Natasha", "Vova", "Katya",
+        "Artem", "Yulya", "Maxim", "Vika", "Pavlik",
+        "Sveta", "Nikita", "Nina", "Denis", "Eva"
+    };
     string NotHumanNames[27] {
         "Lordik", "Barsik", "Murzik", "Rex", "Muhtar",
         "Bobik", "Sharik", "Pushok", "Zhuchka", "Bonya",
@@ -23,6 +32,9 @@ public:
     Sosed(string name, string shoes);
     Sosed(string name, string shoes, string tool);
     Sosed(string name, string shoes, string tool, string mental_condition);
+    Sosed(const Sosed& original);
+
+    ~Sosed();
 
     void Never_sleep();
     void About_myself() const;

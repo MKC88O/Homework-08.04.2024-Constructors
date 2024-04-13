@@ -1,35 +1,12 @@
 #include "Mouse.h"
 
-Mouse::Mouse() {
-    SetBrand("NoName");
-    SetModel("NoName8000ZX");
-    SetColor("Black");
-    SetWireless(true);
-    SetLeftButton(false);
-    SetRightButton(true);
-    SetScrol(true);
+Mouse::Mouse() : Mouse::Mouse("NoName", "NoName8000ZX", "Black") {}
+Mouse::Mouse(bool wireless) : Mouse::Mouse("NoName", "NoName8000ZX", "Black") {
+    SetWireless(wireless);
 }
-
-Mouse::Mouse(string brand) {
-    SetBrand(brand);
-    SetModel("NoName8000ZX");
-    SetColor("Black");
-    SetWireless(true);
-    SetLeftButton(false);
-    SetRightButton(true);
-    SetScrol(true);
-}
-
-Mouse::Mouse(string brand, string model) {
-    SetBrand(brand);
-    SetModel(model);
-    SetColor("Black");
-    SetWireless(true);
-    SetLeftButton(false);
-    SetRightButton(true);
-    SetScrol(true);
-}
-
+Mouse::Mouse(string brand) : Mouse::Mouse(brand, "NoName8000ZX", "Black") {}
+Mouse::Mouse(string brand, string model) : Mouse::Mouse(brand, model, "Black") {}
+//main c-tor
 Mouse::Mouse(string brand, string model, string color) {
     SetBrand(brand);
     SetModel(model);
@@ -38,16 +15,28 @@ Mouse::Mouse(string brand, string model, string color) {
     SetLeftButton(false);
     SetRightButton(true);
     SetScrol(true);
+    ratingCount = 1;
+    rating = new int[ratingCount];
+    for (int i = 0; i < ratingCount; i++)
+    {
+        rating[i] = rand() % 5 + 1;
+    }
+}
+Mouse::Mouse(const Mouse& original) : Mouse::Mouse("NoName", "NoName8000ZX", "Black") {
+    this->brand = original.brand;
+    this->model = original.model;
+    this->color = original.color;
+    this->ratingCount = original.ratingCount;
+    this->rating = new int[this->ratingCount];
+    for (int i = 0; i < this->ratingCount; i++)
+    {
+        this->rating[i] = original.rating[i];
+    }
 }
 
-Mouse::Mouse(bool wireless) {
-    SetBrand("NoName");
-    SetModel("NoName8000ZX");
-    SetColor("Black");
-    SetWireless(wireless);
-    SetLeftButton(false);
-    SetRightButton(true);
-    SetScrol(true);
+Mouse::~Mouse() {
+    delete[] rating;
+    rating = nullptr;
 }
 
 void Mouse::Press_left_button() const {
@@ -79,6 +68,7 @@ void Mouse::MouseInfo() const {
     else {
         cout << "\tWired or wireless:  wired.\n";
     }
+    cout << "\tRating: " << *rating << " stars\n";
 }
 
 void Mouse::SetBrand(string brand) {

@@ -1,46 +1,44 @@
 #include "Dog.h"
 #include <iostream>
 
-Dog::Dog() {
-    SetName("Benya");
-    SetFavoriteFood("meat");
-    SetBread("Pikines ");
-    SetWeight(6);
-    SetColor("beige");
-}
-
-Dog::Dog(string name, string color, string bread) {
-    SetName(name);
-    SetFavoriteFood("meat");
-    SetBread(bread);
-    SetWeight(6);
-    SetColor(color);
-}
-
-Dog::Dog(string name, string color, string bread, double weight) {
-    SetName(name);
-    SetFavoriteFood("meat");
-    SetBread(bread);
+Dog::Dog() : Dog::Dog("Benya", "beige", "Pikines ", "meat") {}
+Dog::Dog(string color, string bread) : Dog::Dog("Belka", color, bread, "meat") {}
+Dog::Dog(string name, string color, string bread) : Dog::Dog(name, color, bread, "meat") {}
+Dog::Dog(string name, string color, string bread, double weight) : Dog::Dog( name, color, bread, "meat") {
     SetWeight(weight);
-    SetColor(color);
 }
-
-Dog::Dog(string name, string color, string bread, string favorite_food) {
+// main c-tor
+Dog::Dog(string name, string color, string bread, string favoriteFood) {
     SetName(name);
-    SetFavoriteFood(favorite_food);
+    SetFavoriteFood(favoriteFood);
     SetBread(bread);
     SetWeight(6);
     SetColor(color);
+    friendsCount = 3;
+    friends = new string[friendsCount];
+    for (int i = 0; i < friendsCount; i++)
+    {
+        int random = rand() % 27;
+        friends[i] = dogFriends[random];
+    }
+}
+Dog::Dog(const Dog& original) : Dog::Dog("Benya", "beige", "Pikines ", "meat") {
+    this->name = original.name;
+    this->bread = original.bread;
+    this->color = original.color;
+    this->favoriteFood = original.favoriteFood;
+    this->friendsCount = original.friendsCount;
+    this->friends = new string[this->friendsCount];
+    for (int i = 0; i < this->friendsCount; i++)
+    {
+        this->friends[i] = original.friends[i];
+    }
 }
 
-Dog::Dog(string color, string bread) {
-    SetName("Lordik");
-    SetFavoriteFood("meat");
-    SetBread(bread);
-    SetWeight(6);
-    SetColor(color);
+Dog::~Dog() {
+    delete[] friends;
+    friends = nullptr;
 }
-
 
  void Dog::Bark() const {
      cout << bread << " " << name << " : " << "Tyav-Tyav...\n";
@@ -77,6 +75,11 @@ Dog::Dog(string color, string bread) {
      cout << name << " now " << weight + 1 << " kg.\n";
      cout << "And ";
      Sleep();
+     cout << GetName() << " friends: ";
+     for (int i = 0; i < friendsCount; i++)
+     {
+         cout << friends[i] << ", ";
+     }
      cout << "\n\n";
  }
 
